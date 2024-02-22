@@ -12,6 +12,7 @@ public class Permission {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column(name = "type")
     private String type;
 
     @ManyToMany(mappedBy = "permissions")

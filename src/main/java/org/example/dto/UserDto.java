@@ -1,6 +1,5 @@
 package org.example.dto;
 
-import org.example.models.Permission;
 import org.example.models.User;
 
 import javax.validation.constraints.NotBlank;

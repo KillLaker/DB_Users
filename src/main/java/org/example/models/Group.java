@@ -11,6 +11,8 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column(name = "group_name")
+    private String name;
     @ManyToMany(mappedBy = "groups")
     Set<User> users = new HashSet<>();
 
@@ -35,6 +37,14 @@ public class Group {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<User> getUsers() {
