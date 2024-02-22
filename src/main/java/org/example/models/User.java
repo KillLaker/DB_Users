@@ -87,6 +87,16 @@ public class User {
         perm.getUsers().remove(this);
     }
 
+
+    public void addGroup(Group group){
+        this.groups.add(group);
+        group.getUsers().add(this);
+    }
+    public void removeGroup(Group group){
+        this.groups.remove(group);
+        group.getUsers().remove(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

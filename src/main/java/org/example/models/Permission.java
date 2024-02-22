@@ -20,13 +20,6 @@ public class Permission {
     @ManyToMany(mappedBy = "permissions")
     private Set<Group> groups = new HashSet<>();
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
 
     public String getType() {
         return type;
@@ -42,6 +35,22 @@ public class Permission {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
     }
 
     @Override
