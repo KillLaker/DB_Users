@@ -1,11 +1,14 @@
 package org.example.models;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.SortNatural;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
-@Entity
+@Entity(name = "User")
+@Table (name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -13,9 +16,24 @@ public class User {
 
     private String firstName;
     private String lastName;
+    public User(){
 
-    @OneToMany(mappedBy = "user_id", fetch = FetchType.LAZY)
-    private Set<User_Perm_Relations> permissions =new HashSet<>();
+    }
+
+    public User(String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName  = lastName;
+    }
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "user_permissions",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id")
+    )
+    private Set<Permission> permissions = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -42,14 +60,34 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Set<User_Perm_Relations> getPermissions() {
+    public Set<Permission> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(Set<User_Perm_Relations> permissions) {
+    public void setPermissions(Set<Permission> permissions) {
         this.permissions = permissions;
     }
 
+    public void addPermission(Permission perm){
+        this.permissions.add(perm);
+        perm.getUsers().add(this);
+    }
+    public void removePermisson(Permission perm){
+        this.permissions.remove(perm);
+        perm.getUsers().remove(this);
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
 

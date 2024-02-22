@@ -1,7 +1,6 @@
 package org.example.dto;
 
 import org.example.models.Permission;
-import org.example.models.User_Perm_Relations;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Collections;
@@ -17,7 +16,7 @@ public class PermissionDto {
     @NotBlank
     private String type;
 
-    private Set<User_Perm_Relations_Dto> users = new HashSet<>();
+    private Set<UserDto> users = new HashSet<>();
 
     public PermissionDto(Permission p){
         this.id = p.getId();
@@ -25,7 +24,7 @@ public class PermissionDto {
         this.users = Optional.of(p.getUsers())
                 .orElse(Collections.emptySet())
                 .stream()
-                .map(User_Perm_Relations_Dto::new)
+                .map(UserDto::new)
                 .collect(Collectors.toSet());
 
     }
@@ -46,11 +45,13 @@ public class PermissionDto {
         this.type = type;
     }
 
-    public Set<User_Perm_Relations_Dto> getUsers() {
+    public Set<UserDto> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User_Perm_Relations_Dto> users) {
+    public void setUsers(Set<UserDto> users) {
         this.users = users;
     }
+
+
 }
