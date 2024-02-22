@@ -35,6 +35,16 @@ public class User {
     )
     private Set<Permission> permissions = new HashSet<>();
 
+    @ManyToMany(cascade =  {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "user_groups",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id")
+    )
+    private Set<Group> groups = new HashSet<>();
+
     public Long getId() {
         return id;
     }
